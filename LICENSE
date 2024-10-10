@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2019 All the Ducks
+Copyright (c) 2024 All the Ducks
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,6 +11,11 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+The Software may include components or dependencies licensed under different licenses, including but not limited to:
+
+Vert.x, which is licensed under the Apache License 2.0 and the Eclipse Public License 1.0. These dependencies are
+subject to their respective licenses, and users must comply with their terms when using those components.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
