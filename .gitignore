@@ -1,0 +1,8 @@
+build
+classes
+.gradle
+.idea
+*.iml
+.sass-cache
+out
+.DS_Store
