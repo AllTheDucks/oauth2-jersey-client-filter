@@ -42,7 +42,12 @@ test {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId = 'com.alltheducks'
+            artifactId = 'oauth2-jersey-client-filter'
+            version = version
+
             from components.java
+
         }
     }
     repositories {
