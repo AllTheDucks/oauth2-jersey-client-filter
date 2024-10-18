@@ -20,7 +20,7 @@ public class OAuth2ClientRequestFilter implements ClientRequestFilter {
 
     @Override
     public void filter(final ClientRequestContext requestContext) throws IOException {
-        final var user = this.userContext.fetchUser(requestContext);
+        final var user = this.userContext.fetchUser();
         if(user.isPresent()) {
             requestContext.getHeaders().putSingle(HttpHeaders.AUTHORIZATION, "Bearer " + user.get().principal().getString("access_token"));
         } else {

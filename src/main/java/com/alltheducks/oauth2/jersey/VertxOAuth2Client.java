@@ -17,7 +17,7 @@ public class VertxOAuth2Client {
     private final OAuth2Auth oauth2;
     private final List<String> scopes;
     private final OAuth2FlowType flowType;
-    private User cachedUser;
+    private User user;
 
     public VertxOAuth2Client(final String tokenUri, final String clientId, final String clientSecret, final List<String> scopes, final OAuth2FlowType flowType) {
         final var vertx = Vertx.vertx();
@@ -33,22 +33,22 @@ public class VertxOAuth2Client {
     }
 
     public void getUser(final Handler<AsyncResult<User>> handler) {
-        if (this.cachedUser == null) {
+        if (this.user == null) {
             authenticateNewUser(handler);
             return;
         }
 
-        if (this.cachedUser.expired()) {
-            this.oauth2.refresh(this.cachedUser)
+        if (this.user.expired()) {
+            this.oauth2.refresh(this.user)
                     .onSuccess(refreshedUser -> {
-                        this.cachedUser = refreshedUser;
-                        handler.handle(Future.succeededFuture(this.cachedUser));
+                        this.user = refreshedUser;
+                        handler.handle(Future.succeededFuture(this.user));
                     })
                     .onFailure(err -> handler.handle(Future.failedFuture(err)));
             return;
         }
 
-        handler.handle(Future.succeededFuture(this.cachedUser));
+        handler.handle(Future.succeededFuture(this.user));
     }
 
     private void authenticateNewUser(final Handler<AsyncResult<User>> handler) {
@@ -56,8 +56,8 @@ public class VertxOAuth2Client {
 
         this.oauth2.authenticate(credentials, result -> {
             if (result.succeeded()) {
-                this.cachedUser = result.result();
-                handler.handle(Future.succeededFuture(this.cachedUser));
+                this.user = result.result();
+                handler.handle(Future.succeededFuture(this.user));
             } else {
                 handler.handle(Future.failedFuture(result.cause()));
             }

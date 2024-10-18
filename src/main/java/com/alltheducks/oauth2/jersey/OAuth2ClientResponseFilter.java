@@ -28,7 +28,8 @@ public class OAuth2ClientResponseFilter implements ClientResponseFilter {
 
         if (responseContext.getStatus() == 401 && !isRetryRequest) {
             logger.debug("401 Unauthorized received, attempting to fetch new token and retrying request");
-            this.userContext.fetchUser(requestContext);
+            this.userContext.clearUser();
+            this.userContext.fetchUser();
 
             final var client = requestContext.getClient();
 
