@@ -33,6 +33,7 @@ dependencies {
     implementation 'org.glassfish.jersey.inject:jersey-hk2:3.1.9'
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
     implementation 'io.vertx:vertx-auth-oauth2:4.5.10'
+    implementation 'software.amazon.awssdk:dynamodb-enhanced:2.20.60'
 }
 
 test {

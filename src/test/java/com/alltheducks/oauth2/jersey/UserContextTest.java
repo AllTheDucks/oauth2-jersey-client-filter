@@ -16,7 +16,6 @@ public class UserContextTest {
 
     @Test
     public void testFetchUser_whenUserNotCached_expectUserFromVertxClient() throws ExecutionException, InterruptedException {
-        final var clientRequestContext = mock(ClientRequestContext.class);
         final var vertxOAuth2Client = mock(VertxOAuth2Client.class);
 
         final var user = mock(User.class);
@@ -31,10 +30,10 @@ public class UserContextTest {
             return null;
         }).when(vertxOAuth2Client).getUser(any());
 
-        final var userContext = new UserContext(vertxOAuth2Client);
+        final var userContext = new UserContext(vertxOAuth2Client, null);
 
         // Call fetchUser and check the result
-        final var returnedUser = userContext.fetchUser(clientRequestContext);
+        final var returnedUser = userContext.fetchUser();
 
         assertTrue(returnedUser.isPresent());
         assertEquals("newtoken", returnedUser.get().principal().getString("access_token"));
@@ -43,7 +42,6 @@ public class UserContextTest {
 
     @Test
     public void testFetchUser_whenVertxOAuth2ClientFails_expectEmptyOptional() {
-        final var clientRequestContext = mock(ClientRequestContext.class);
         final var vertxOAuth2Client = mock(VertxOAuth2Client.class);
 
         doAnswer(invocation -> {
@@ -52,9 +50,9 @@ public class UserContextTest {
             return null;
         }).when(vertxOAuth2Client).getUser(any());
 
-        final var userContext = new UserContext(vertxOAuth2Client);
+        final var userContext = new UserContext(vertxOAuth2Client, null);
 
-        final var returnedUser = userContext.fetchUser(clientRequestContext);
+        final var returnedUser = userContext.fetchUser();
 
         assertFalse(returnedUser.isPresent());
     }

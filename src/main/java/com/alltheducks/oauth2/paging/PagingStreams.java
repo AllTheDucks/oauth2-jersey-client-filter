@@ -2,6 +2,7 @@ package com.alltheducks.oauth2.paging;
 
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Spliterators;
