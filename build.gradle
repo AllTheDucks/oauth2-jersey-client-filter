@@ -26,12 +26,7 @@ dependencies {
     testImplementation 'org.slf4j:slf4j-simple:2.0.16'
 
     // Other dependencies
-    implementation 'org.slf4j:slf4j-api:2.0.16'
-    implementation 'org.glassfish.jersey.core:jersey-client:3.1.9'
     implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:3.1.9'
-    implementation 'org.glassfish.jersey.security:oauth2-client:3.1.9'
-    implementation 'org.glassfish.jersey.inject:jersey-hk2:3.1.9'
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
     implementation 'io.vertx:vertx-auth-oauth2:4.5.10'
     implementation 'software.amazon.awssdk:dynamodb-enhanced:2.20.60'
 }
