@@ -86,6 +86,6 @@ public class VertxOAuth2Client {
     }
 
     private boolean userHasRefreshToken(final User user) {
-        return user.principal().getString("refresh_token") == null || user.principal().getString("refresh_token").isEmpty();
+        return user.principal().getString("refresh_token") != null && !user.principal().getString("refresh_token").isEmpty();
     }
 }
