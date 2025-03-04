@@ -24,7 +24,7 @@ public class OAuth2ClientRequestFilter implements ClientRequestFilter {
         if(user.isPresent()) {
             requestContext.getHeaders().putSingle(HttpHeaders.AUTHORIZATION, "Bearer " + user.get().principal().getString("access_token"));
         } else {
-            logger.warn("No token found, therefore the request with be sent without the Authorization header.");
+            logger.warn("No token found, therefore the request will be sent without the Authorization header.");
         }
     }
 

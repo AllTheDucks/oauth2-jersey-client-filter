@@ -34,18 +34,23 @@ public class VertxOAuth2Client {
 
     public void getUser(final Handler<AsyncResult<User>> handler) {
         if (this.user == null) {
-            authenticateNewUser(handler);
+            this.authenticateNewUser(handler);
             return;
         }
 
         if (this.user.expired()) {
-            this.oauth2.refresh(this.user)
-                    .onSuccess(refreshedUser -> {
-                        this.user = refreshedUser;
-                        handler.handle(Future.succeededFuture(this.user));
-                    })
-                    .onFailure(err -> handler.handle(Future.failedFuture(err)));
-            return;
+            if(this.userHasRefreshToken(this.user)) {
+                this.oauth2.refresh(this.user)
+                        .onSuccess(refreshedUser -> {
+                            this.user = refreshedUser;
+                            handler.handle(Future.succeededFuture(this.user));
+                        })
+                        .onFailure(err -> handler.handle(Future.failedFuture(err)));
+                return;
+            } else {
+                this.authenticateNewUser(handler);
+                return;
+            }
         }
 
         handler.handle(Future.succeededFuture(this.user));
@@ -78,5 +83,9 @@ public class VertxOAuth2Client {
             default:
                 return null;
         }
+    }
+
+    private boolean userHasRefreshToken(final User user) {
+        return user.principal().getString("refresh_token") == null || user.principal().getString("refresh_token").isEmpty();
     }
 }
