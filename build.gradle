@@ -27,7 +27,7 @@ dependencies {
 
     // Other dependencies
     implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:3.1.10'
-    implementation 'io.vertx:vertx-auth-oauth2:4.5.13'
+    implementation 'io.vertx:vertx-auth-oauth2:4.5.16'
     implementation 'software.amazon.awssdk:dynamodb-enhanced:2.30.26'
 }
 

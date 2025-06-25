@@ -30,3 +30,7 @@ or
 ```
 
 `mvn install`
+
+## Publishing a new version for Jitpack
+1. Git tag a new version e.g. `git tag v1.1.5`
+2. In Github, draft a new release from the tag (this will trigger a Github Action that allows Jitpack to bundle the new version)
