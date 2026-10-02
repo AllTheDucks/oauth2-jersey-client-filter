@@ -56,4 +56,17 @@ public class UserContextTest {
 
         assertFalse(returnedUser.isPresent());
     }
+
+    @Test
+    public void testFetchUser_whenTokenRequestNeverCompletes_expectEmptyOptionalAfterTimeout() {
+        final var vertxOAuth2Client = mock(VertxOAuth2Client.class);
+        doAnswer(invocation -> null).when(vertxOAuth2Client).getUser(any()); // the handler is never called
+
+        final var userContext = new UserContext(vertxOAuth2Client, null, java.time.Duration.ofMillis(200));
+
+        final var returnedUser = org.junit.jupiter.api.Assertions.assertTimeoutPreemptively(
+                java.time.Duration.ofSeconds(5), userContext::fetchUser);
+
+        assertFalse(returnedUser.isPresent());
+    }
 }
