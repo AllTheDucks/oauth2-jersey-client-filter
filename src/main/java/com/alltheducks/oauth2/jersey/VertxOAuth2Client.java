@@ -32,6 +32,11 @@ public class VertxOAuth2Client {
         this.oauth2 = OAuth2Auth.create(vertx, options);
     }
 
+    /** Forgets the current token, so the next {@link #getUser} authenticates afresh (e.g. after the API rejected it). */
+    public void clearUser() {
+        this.user = null;
+    }
+
     public void getUser(final Handler<AsyncResult<User>> handler) {
         if (this.user == null) {
             this.authenticateNewUser(handler);
@@ -59,14 +64,12 @@ public class VertxOAuth2Client {
     private void authenticateNewUser(final Handler<AsyncResult<User>> handler) {
         final var credentials = createCredentials();
 
-        this.oauth2.authenticate(credentials, result -> {
-            if (result.succeeded()) {
-                this.user = result.result();
-                handler.handle(Future.succeededFuture(this.user));
-            } else {
-                handler.handle(Future.failedFuture(result.cause()));
-            }
-        });
+        this.oauth2.authenticate(credentials)
+                .onSuccess(authenticatedUser -> {
+                    this.user = authenticatedUser;
+                    handler.handle(Future.succeededFuture(this.user));
+                })
+                .onFailure(err -> handler.handle(Future.failedFuture(err)));
     }
 
     private Oauth2Credentials createCredentials() {
