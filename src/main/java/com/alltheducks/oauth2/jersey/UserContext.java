@@ -23,6 +23,7 @@ public class UserContext {
 
     public void clearUser() {
         this.userCache.clearUser();
+        this.vertxOAuth2Client.clearUser();
     }
 
     public Optional<User> fetchUser() {
