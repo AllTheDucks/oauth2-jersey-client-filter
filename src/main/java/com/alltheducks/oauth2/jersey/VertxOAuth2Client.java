@@ -59,14 +59,12 @@ public class VertxOAuth2Client {
     private void authenticateNewUser(final Handler<AsyncResult<User>> handler) {
         final var credentials = createCredentials();
 
-        this.oauth2.authenticate(credentials, result -> {
-            if (result.succeeded()) {
-                this.user = result.result();
-                handler.handle(Future.succeededFuture(this.user));
-            } else {
-                handler.handle(Future.failedFuture(result.cause()));
-            }
-        });
+        this.oauth2.authenticate(credentials)
+                .onSuccess(authenticatedUser -> {
+                    this.user = authenticatedUser;
+                    handler.handle(Future.succeededFuture(this.user));
+                })
+                .onFailure(err -> handler.handle(Future.failedFuture(err)));
     }
 
     private Oauth2Credentials createCredentials() {
